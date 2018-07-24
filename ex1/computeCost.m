@@ -12,7 +12,18 @@ J = 0;
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
+% hypothesis
 
+%Cost Function
+%for i = 1:m
+ % J = J + ((theta(1:1)+(theta(2:2)*X(i))) - y(i)).^2;
+%endfor
+ % J = J/(2*m);
+predictions = X*theta;              % predictions of hypothesis on examples
+
+sqrErrors   = (predictions - y).^2; % squared errors
+
+J = 1/(2*m) * sum(sqrErrors);
 
 
 
