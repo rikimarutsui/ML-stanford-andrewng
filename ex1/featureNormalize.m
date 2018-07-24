@@ -7,8 +7,8 @@ function [X_norm, mu, sigma] = featureNormalize(X)
 
 % You need to set these values correctly
 X_norm = X;
-mu = zeros(1, size(X, 2));
-sigma = zeros(1, size(X, 2));
+mu = zeros(1, size(X, 2)); % Avg Value of the X
+sigma = zeros(1, size(X, 2)); % The value of the X of (Max - Min)
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: First, for each feature dimension, compute the mean
@@ -24,7 +24,18 @@ sigma = zeros(1, size(X, 2));
 %               each feature. 
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
-%       
+%   
+    
+for i=1:length(mu),
+  mu(i) = mean(X_norm(:,i));         % Mean / Avg function = (sum(X_norm(:, i))) / length(X_norm(:, i));
+  sigma(i) = std(X_norm(:,i));       % Standard Deviation = std (x) = sqrt ( 1/(N-1) SUM_i (x(i) - mean(x))^2 )
+  X_norm(:, i) = (X_norm(:, i) - mu(i)) / sigma(i); 
+  
+  %for j=1:length(X_norm(:, i)),
+   % X_norm(j, i) = (X_norm(j, i) - mu(i)) / sigma(i); 
+  %endfor
+endfor
+
 
 
 
