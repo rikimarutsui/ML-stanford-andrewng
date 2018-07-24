@@ -16,16 +16,18 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCostMulti) and gradient here.
     %
-
-
-
-
-
-
-
-
-
-
+  % Calculate hypothesis of the multiple variables
+  h = 0;
+  theta_temp = theta;
+  for i=1:length(theta_temp),
+    h = h + (X(:,i) * theta_temp(i));
+  endfor
+  
+  for i=1:length(theta),
+    theta_temp(i) = theta(i) - alpha * (1/m) * sum((h - y) .* X(:,i));
+  endfor
+  
+  theta = theta_temp;
 
     % ============================================================
 
