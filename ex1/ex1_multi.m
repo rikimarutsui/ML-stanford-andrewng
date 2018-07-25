@@ -106,6 +106,9 @@ fprintf('\n');
 % not need to be normalized.
 price = 0; % You should change this
 
+X_estimate = [1650 3];
+X_estimate = [ones(size(X_estimate, 1),1), X_estimate];
+price = sum(X_estimate * theta);
 
 % ============================================================
 
@@ -151,6 +154,9 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 price = 0; % You should change this
 
+X_estimate = [1650 3];
+X_estimate = [ones(size(X_estimate, 1),1), X_estimate];
+price = sum(X_estimate * theta);
 
 % ============================================================
 
