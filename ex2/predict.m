@@ -18,10 +18,12 @@ s = sigmoid(X * theta);
 for i=1:m,
   if s(i) >= 0.5,
     p(i) = 1;
-  else
-    p(i) = 0;
   endif
 endfor
+
+% Model Answer
+% p = sigmoid(X*theta)>=0.5;
+
 
 % =========================================================================
 
