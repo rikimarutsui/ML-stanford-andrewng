@@ -18,12 +18,12 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
-
+% vectorized g(X?) = g(?TX)
 s = sigmoid(X * theta);
 % Cost Function
 J = 1/m * ((-y)' * log(s) - (1 - y') * log(1 - s))
 
-% gradient
+% gradient ?:=?- a/m * XT(g(X?)-y)
 grad = 1/m * (X' *(s - y));
 
 
