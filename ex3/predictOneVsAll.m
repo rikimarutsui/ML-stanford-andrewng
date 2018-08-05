@@ -28,13 +28,35 @@ X = [ones(m, 1) X];
 %       max element, for more information see 'help max'. If your examples 
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
-%       
+% A = 
+%   8 1 6
+%   3 5 7
+%   4 9 2
+%
+%    [Y, U] = max(A, [], 1); %= max(A)  = get max value of the 1st demension 
+% Y = % get column views max value [1st dimension]
+%   8 9 7
+% U = % get the max value of Y - index in column 
+%   1 3 2
+%     max(A, [], 2) = 
+%  
+%   [Y, U] = max(A, [], 2); % get max value of the 2nd demension
+% Y =  % get row views max value [2nd dimension]
+%   8
+%   7
+%   9
+% U = % return the max value of Y - index of row
+%   1
+%   3
+%   2
 
+% Get Sigmoid
+s = sigmoid(X * all_theta');
+disp(size(s));
+% In the Max Function max("Input Matrix", "Empty block", "The Dimension of Input Matrix")
+[maxVal, maxValRowNo] = max(s, [], 2);
 
-
-
-
-
+p = maxValRowNo;
 
 % =========================================================================
 
