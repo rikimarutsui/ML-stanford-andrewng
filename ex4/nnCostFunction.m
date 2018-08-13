@@ -73,14 +73,17 @@ h  = sigmoid(z3);
 % convert y from (1-num_labels) class into num_labels vector
 yd = eye(num_labels);
 y = yd(y, : );
-disp(size(y));
-
-
-
 
 % Cost Function
-J = 1 / m * sum(sum((-y) .* log(h) - (1 - y) .* log(1 - h))); % because y is matrix not likely vector, so user dot product
+J = sum(sum((-y) .* log(h) - (1 - y) .* log(1 - h))); % because y is matrix not likely vector, so user dot product
 
+% Regularized cost function
+Theta1s = Theta1(:, 2:end); % Cut out 1st column
+Theta2s = Theta2(:, 2:end); % Cut out 1st column
+
+lambdaed = (lambda / (2 * m)) .* (sum(sum(Theta1s .^ 2)) + sum(sum(Theta2s .^ 2)));
+
+J = 1/m .* J + lambdaed;
 
 grad = 0;
 
