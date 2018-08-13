@@ -62,11 +62,27 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Neural Network Algorithm --> Hypothesis
+a1 = [ones(m, 1), X];
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(size(a2, 1), 1), a2];
+z3 = a2 * Theta2';
+h  = sigmoid(z3);
+
+% convert y from (1-num_labels) class into num_labels vector
+yd = eye(num_labels);
+y = yd(y, : );
+disp(size(y));
 
 
 
 
+% Cost Function
+J = 1 / m * sum(sum((-y) .* log(h) - (1 - y) .* log(1 - h))); % because y is matrix not likely vector, so user dot product
 
+
+grad = 0;
 
 
 
