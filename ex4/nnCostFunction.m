@@ -39,6 +39,32 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
+% Neural Network Algorithm --> Hypothesis
+a1 = [ones(m, 1), X];
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(size(a2, 1), 1), a2];
+z3 = a2 * Theta2';
+a3  = sigmoid(z3);
+
+% convert y from (1-num_labels) class into num_labels vector
+yd = eye(num_labels);
+y = yd(y, : );
+
+% Cost Function
+J = sum(sum((-y) .* log(a3) - (1 - y) .* log(1 - a3))); % because y is matrix not likely vector, so user dot product
+
+% Regularized cost function
+Theta1s = Theta1(:, 2:end); % Cut out 1st column
+Theta2s = Theta2(:, 2:end); % Cut out 1st column
+
+% Compute the error
+error = (lambda / (2 * m)) .* (sum(sum(Theta1s .^ 2)) + sum(sum(Theta2s .^ 2)));
+
+J = 1/m .* J + error;
+
+
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -54,6 +80,40 @@ Theta2_grad = zeros(size(Theta2));
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+% Set D(l)ij = 0 for all i, j, l
+triDelta1 = zeros(size(Theta1));
+triDelta2 = zeros(size(Theta2));
+
+% For loop
+for t = 1:m,
+      
+      %Perform forward propagation
+      a1_k = a1(t, :); % set a1 = x
+      z2_k = [1; Theta1 * a1_k'];
+      a2_k = a2(t, :); 
+      z3_k = [1; Theta2 * a2_k']; 
+      a3_k = a3(t, :);
+      
+      % Using y(t), compute delta(L) = a(L) - y(t)
+      y_k  = y(t, :);
+      delta3_k = a3_k - y_k;
+      
+      % Compute delta(L-1), delta(L-2), ... , delta(2)
+      delta2_k = Theta2' * delta3_k' .* sigmoidGradient(z2_k);
+      
+      % remove delta(t)0
+      delta2_k = delta2_k(2:end);
+      
+      % compute Delta(l) = D(l) + delta(l+1) * a(l)T
+      triDelta1 = triDelta1 + delta2_k * (a1_k);
+      triDelta2 = triDelta2 + delta3_k' * (a2_k);
+endfor
+
+% compute D
+Theta1_grad = 1 / m * triDelta1;
+Theta2_grad = 1 / m * triDelta2;
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -61,40 +121,6 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-
-% Neural Network Algorithm --> Hypothesis
-a1 = [ones(m, 1), X];
-z2 = a1 * Theta1';
-a2 = sigmoid(z2);
-a2 = [ones(size(a2, 1), 1), a2];
-z3 = a2 * Theta2';
-h  = sigmoid(z3);
-
-% convert y from (1-num_labels) class into num_labels vector
-yd = eye(num_labels);
-y = yd(y, : );
-
-% Cost Function
-J = sum(sum((-y) .* log(h) - (1 - y) .* log(1 - h))); % because y is matrix not likely vector, so user dot product
-
-% Regularized cost function
-Theta1s = Theta1(:, 2:end); % Cut out 1st column
-Theta2s = Theta2(:, 2:end); % Cut out 1st column
-
-lambdaed = (lambda / (2 * m)) .* (sum(sum(Theta1s .^ 2)) + sum(sum(Theta2s .^ 2)));
-
-J = 1/m .* J + lambdaed;
-
-grad = 0;
-
-
-
-
-
-
-
-
-
 
 
 
