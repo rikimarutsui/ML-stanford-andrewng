@@ -122,7 +122,14 @@ Theta2_grad = 1 / m * triDelta2;
 %               and Theta2_grad from Part 2.
 %
 
+% Theta1s and Theta2s have been removed first column (j)
+% Add 0 value vector size of Theta1s and Theta2s to the first row to make formula r = r + 0 if j = 0
+Theta1s = [zeros(size(Theta1s, 1), 1) Theta1s];
+Theta2s = [zeros(size(Theta2s, 1), 1) Theta2s];
 
+%  Regularized Neural Networks
+Theta1_grad = Theta1_grad + ((lambda / m) * Theta1s);
+Theta2_grad = Theta2_grad + ((lambda / m) * Theta2s);
 
 
 % -------------------------------------------------------------
