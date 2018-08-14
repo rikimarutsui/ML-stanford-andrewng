@@ -15,10 +15,12 @@ function numgrad = computeNumericalGradient(J, theta)
 
 numgrad = zeros(size(theta));
 perturb = zeros(size(theta));
-e = 1e-4;
+e = 1e-4; % 10^-4
 for p = 1:numel(theta)
     % Set perturbation vector
     perturb(p) = e;
+    
+    % numgrad = (J(theta + e) - J(theta - e)) / 2 * e
     loss1 = J(theta - perturb);
     loss2 = J(theta + perturb);
     % Compute Numerical Gradient
