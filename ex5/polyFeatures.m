@@ -15,6 +15,15 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
+m = size(X, 1);
+
+for i = 1 : m,
+  X_poly_t = [X(i)];
+  for j = 2 : p,
+    X_poly_t = [X_poly_t (X(i).^j)];
+  endfor
+  X_poly(i, :) = X_poly_t;
+endfor
 
 
 
