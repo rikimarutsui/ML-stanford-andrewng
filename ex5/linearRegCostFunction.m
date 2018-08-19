@@ -19,13 +19,20 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% Regularized Linear Regression Cost Function
 predictions = X * theta;
 sprError = (predictions - y) .^ 2;
 lambdaed = (lambda / (2*m)) * sum((theta(2:end)) .^ 2);
 
 J = (sum(sprError) / (2*m)) + lambdaed;
 
+% Regularized Linear Regression Gradient
+derivative = (X' * (predictions - y)) / m;
+lambdaed = (lambda / m) * theta(2:end);
 
+grad = derivative(2:end) + lambdaed; 
+
+grad = [derivative(1:1); grad];
 
 
 
